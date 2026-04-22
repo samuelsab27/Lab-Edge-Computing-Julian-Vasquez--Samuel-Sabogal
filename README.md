@@ -18,7 +18,7 @@ El sistema operativo necesita cargar las instrucciones a la memoria. Las depende
 g++ hola.cpp -o hola_dinamico
 g++ hola.cpp -static -o hola_estatico
 ```
-(1.jpeg)
+![Captura punto 1](img/1.jpeg)
 ### Tamaño de los binarios
 
 ```bash
@@ -31,7 +31,7 @@ ls -lh hola_dinamico hola_estatico
 | `hola_estatico` | ~1.2 MB |
 
 > **Análisis:** El archivo estático es mucho más grande porque incluye todas las funciones de la librería estándar de C++ dentro del ejecutable. El dinámico solo guarda una referencia para buscarlas en el sistema operativo al ejecutarse.
-![Captura punto 1](img/1.jpeg)
+![Captura punto 1](img/2.jpeg)
 ### Dependencias (`ldd`)
 
 ```bash
