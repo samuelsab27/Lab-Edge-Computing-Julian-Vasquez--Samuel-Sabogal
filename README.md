@@ -95,6 +95,7 @@ time ./delay
 | `user` | 0.00s |
 | `sys` | 0.00s |
 | `cpu` | 0% |
+
 ![Resultado de time](img/5.jpeg)
 > **Análisis:** El tiempo `real` es de 2 segundos porque es lo que transcurrió en el reloj del mundo real. Sin embargo, los tiempos `user` y `sys` son cero porque `usleep` es una **llamada de bloqueo no activa**. El programa le indica al Kernel que no requiere el procesador durante ese intervalo, liberándolo para otros procesos. Si se hubiera usado un ciclo `while` vacío (busy-wait), el `user` habría marcado ~2.00s y el CPU habría llegado al 100%.
 
