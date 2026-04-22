@@ -6,14 +6,6 @@
 
 ---
 
-# Informe de Laboratorio: Computación en el Borde IOT
-
-**Estudiante:** [TU NOMBRE AQUÍ]  
-**Institución:** Universidad de la Sabana  
-**Materia:** Computación en el Borde IOT  
-
----
-
 ## 1. Enlazado Estático vs. Dinámico
 
 ### Contexto
@@ -26,7 +18,7 @@ El sistema operativo necesita cargar las instrucciones a la memoria. Las depende
 g++ hola.cpp -o hola_dinamico
 g++ hola.cpp -static -o hola_estatico
 ```
-
+(img/1.png)
 ### Tamaño de los binarios
 
 ```bash
