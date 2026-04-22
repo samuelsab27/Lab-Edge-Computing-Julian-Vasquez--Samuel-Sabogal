@@ -18,7 +18,7 @@ El sistema operativo necesita cargar las instrucciones a la memoria. Las depende
 g++ hola.cpp -o hola_dinamico
 g++ hola.cpp -static -o hola_estatico
 ```
-(img/1.png)
+(1.jpeg)
 ### Tamaño de los binarios
 
 ```bash
