@@ -18,7 +18,7 @@ El sistema operativo necesita cargar las instrucciones a la memoria. Las depende
 g++ hola.cpp -o hola_dinamico
 g++ hola.cpp -static -o hola_estatico
 ```
-![Captura punto 1](img/1.jpeg)
+![Compilación y tamaño de binarios](img/1.jpeg)
 ### Tamaño de los binarios
 
 ```bash
@@ -31,7 +31,8 @@ ls -lh hola_dinamico hola_estatico
 | `hola_estatico` | ~1.2 MB |
 
 > **Análisis:** El archivo estático es mucho más grande porque incluye todas las funciones de la librería estándar de C++ dentro del ejecutable. El dinámico solo guarda una referencia para buscarlas en el sistema operativo al ejecutarse.
-![Captura punto 1](img/2.jpeg)
+![Strace y diff (parte 1)](img/2.jpeg)
+![Strace y diff (parte 2)](img/3.jpeg)
 ### Dependencias (`ldd`)
 
 ```bash
@@ -79,7 +80,7 @@ int main() {
     return 0;
 }
 ```
-
+![Código con usleep](img/6.jpeg)
 ### Medición con `time`
 
 ```bash
@@ -94,7 +95,7 @@ time ./delay
 | `user` | 0.00s |
 | `sys` | 0.00s |
 | `cpu` | 0% |
-
+![Resultado de time](img/5.jpeg)
 > **Análisis:** El tiempo `real` es de 2 segundos porque es lo que transcurrió en el reloj del mundo real. Sin embargo, los tiempos `user` y `sys` son cero porque `usleep` es una **llamada de bloqueo no activa**. El programa le indica al Kernel que no requiere el procesador durante ese intervalo, liberándolo para otros procesos. Si se hubiera usado un ciclo `while` vacío (busy-wait), el `user` habría marcado ~2.00s y el CPU habría llegado al 100%.
 
 ---
@@ -137,11 +138,11 @@ int main() {
     return 0;
 }
 ```
-
+![Código stack vs heap](img/8.jpeg)
 > **Análisis:** Al imprimir las direcciones de memoria con `%p`, se puede observar que la variable del Stack tiene una dirección alta (ej. `0x7fff...`) mientras que la del Heap tiene una dirección baja (ej. `0x55e...`). Esto confirma que el sistema operativo las almacena en **segmentos físicos separados** de la RAM. El Heap es la opción correcta cuando se necesita almacenar grandes volúmenes de datos o cuando los datos deben persistir más allá del alcance de una función.
 
 ---
-
+![Análisis de memoria con time -v](img/7.jpeg)
 ## 4. Concurrencia: Procesos vs Hilos
 
 ### Contexto
@@ -157,7 +158,7 @@ curl -L -o 2000.txt https://www.gutenberg.org/ebooks/2000.txt.utf-8
 ```
 
 ---
-
+![Resultado de conteo de palabras](img/9.jpeg)
 ### A. Versión Procesos (`wordfreq_proc.cpp`)
 
 #### Funcionamiento
@@ -182,7 +183,7 @@ top
 > **Análisis:** En `top` se observan **dos filas con PIDs distintos**, correspondientes al proceso padre y al proceso hijo. La memoria `RES` no se duplica exactamente porque Linux utiliza el mecanismo **Copy-on-Write (CoW)**: al hacer `fork()`, ambos procesos comparten las mismas páginas físicas de RAM hasta que uno de ellos intenta modificarlas. Solo en ese momento el sistema operativo crea una copia privada para ese proceso.
 
 ---
-
+![Análisis del proceso con ps y pmap](img/10.jpeg)
 ### B. Versión Hilos (`wordfreq_threads.cpp`)
 
 #### Funcionamiento
